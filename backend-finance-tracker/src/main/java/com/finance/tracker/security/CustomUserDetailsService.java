@@ -1,0 +1,3 @@
+package com.finance.tracker.security;
+import com.finance.tracker.user.User; import com.finance.tracker.user.UserRepository; import org.springframework.security.core.userdetails.*; import org.springframework.stereotype.Service;
+@Service public class CustomUserDetailsService implements UserDetailsService { private final UserRepository users; public CustomUserDetailsService(UserRepository users){this.users=users;} public UserDetails loadUserByUsername(String username){ User u=users.findByUsername(username).orElseThrow(()->new UsernameNotFoundException("User not found")); return new UserPrincipal(u.getId(),u.getUsername(),u.getPassword()); } }
